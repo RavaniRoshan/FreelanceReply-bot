@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file contains functions for setting up the Vite development
+ * server and for serving static files in a production environment.
+ */
+
 import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
@@ -8,6 +13,11 @@ import { nanoid } from "nanoid";
 
 const viteLogger = createLogger();
 
+/**
+ * Logs a message to the console with a timestamp and source.
+ * @param {string} message - The message to log.
+ * @param {string} [source="express"] - The source of the log message.
+ */
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -19,6 +29,12 @@ export function log(message: string, source = "express") {
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
+/**
+ * Sets up the Vite development server.
+ * @param {Express} app - The Express application instance.
+ * @param {Server} server - The HTTP server instance.
+ * @returns {Promise<void>} A promise that resolves when the Vite server is set up.
+ */
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
@@ -67,6 +83,10 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
+/**
+ * Serves static files from the build directory.
+ * @param {Express} app - The Express application instance.
+ */
 export function serveStatic(app: Express) {
   const distPath = path.resolve(import.meta.dirname, "public");
 

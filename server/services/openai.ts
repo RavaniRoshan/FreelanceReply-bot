@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file contains functions that interact with the OpenAI API
+ * to perform various AI-related tasks, such as classifying inquiries,
+ * generating responses, analyzing sentiment, and improving templates.
+ */
+
 import OpenAI from "openai";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
@@ -5,21 +11,43 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY_ENV_VAR || "default_key"
 });
 
+/**
+ * Represents the classification of a customer inquiry.
+ */
 export interface InquiryClassification {
+  /** The category of the inquiry (e.g., "project", "pricing"). */
   category: string;
+  /** The priority of the inquiry. */
   priority: "low" | "normal" | "high" | "urgent";
+  /** A brief description of what the customer wants. */
   intent: string;
+  /** The confidence score of the classification (0.0 to 1.0). */
   confidence: number;
+  /** A list of variables that need to be filled in for a response. */
   requiredVariables: string[];
+  /** The ID of a suggested template to use for a response, if any. */
   suggestedTemplateId?: string;
 }
 
+/**
+ * Represents a generated response to a customer inquiry.
+ */
 export interface ResponseGeneration {
+  /** The content of the generated response. */
   content: string;
+  /** The confidence score of the generated response (0.0 to 1.0). */
   confidence: number;
+  /** A record of variables extracted from the inquiry and used in the response. */
   variables: Record<string, string>;
 }
 
+/**
+ * Classifies a customer inquiry using the OpenAI API.
+ * @param {string} subject - The subject of the inquiry.
+ * @param {string} content - The content of the inquiry.
+ * @param {Array<{ id: string; name: string; category: string; content: string }>} existingTemplates - A list of existing templates to help with classification.
+ * @returns {Promise<InquiryClassification>} A promise that resolves to the classification of the inquiry.
+ */
 export async function classifyInquiry(
   subject: string,
   content: string,
@@ -86,6 +114,13 @@ Consider urgency indicators like "urgent", "ASAP", deadline mentions, etc. for p
   }
 }
 
+/**
+ * Generates a response to a customer inquiry using a template and the OpenAI API.
+ * @param {string} inquiryContent - The content of the customer inquiry.
+ * @param {string} templateContent - The content of the template to use as a base.
+ * @param {Record<string, string>} [variables={}] - A record of variables to fill in the template.
+ * @returns {Promise<ResponseGeneration>} A promise that resolves to the generated response.
+ */
 export async function generateResponse(
   inquiryContent: string,
   templateContent: string,
@@ -139,6 +174,11 @@ Instructions:
   }
 }
 
+/**
+ * Analyzes the sentiment of a piece of text using the OpenAI API.
+ * @param {string} text - The text to analyze.
+ * @returns {Promise<{ rating: number; confidence: number; }>} A promise that resolves to the sentiment analysis result.
+ */
 export async function analyzeSentiment(text: string): Promise<{
   rating: number;
   confidence: number;
@@ -174,6 +214,12 @@ export async function analyzeSentiment(text: string): Promise<{
   }
 }
 
+/**
+ * Improves a template based on performance data using the OpenAI API.
+ * @param {string} templateContent - The content of the template to improve.
+ * @param {Array<{ success: boolean; customerFeedback?: number; responseTime?: number }>} feedbackData - An array of feedback data for the template.
+ * @returns {Promise<{ improvedContent: string; improvements: string[]; confidence: number; }>} A promise that resolves to the improved template and a list of improvements.
+ */
 export async function improveTemplate(
   templateContent: string,
   feedbackData: Array<{ success: boolean; customerFeedback?: number; responseTime?: number }>

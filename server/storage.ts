@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file defines the storage interface and an in-memory
+ * implementation of that interface. This is used to store and retrieve all
+ * the application's data.
+ */
+
 import { 
   type User, 
   type InsertUser,
@@ -14,42 +20,163 @@ import {
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
+/**
+ * Interface for storage operations.
+ */
 export interface IStorage {
   // User operations
+  /**
+   * Gets a user by their ID.
+   * @param {string} id - The ID of the user to get.
+   * @returns {Promise<User | undefined>} A promise that resolves to the user, or undefined if not found.
+   */
   getUser(id: string): Promise<User | undefined>;
+  /**
+   * Gets a user by their username.
+   * @param {string} username - The username of the user to get.
+   * @returns {Promise<User | undefined>} A promise that resolves to the user, or undefined if not found.
+   */
   getUserByUsername(username: string): Promise<User | undefined>;
+  /**
+   * Creates a new user.
+   * @param {InsertUser} user - The user to create.
+   * @returns {Promise<User>} A promise that resolves to the created user.
+   */
   createUser(user: InsertUser): Promise<User>;
 
   // Template operations
+  /**
+   * Gets all templates for a user.
+   * @param {string} userId - The ID of the user to get templates for.
+   * @returns {Promise<Template[]>} A promise that resolves to a list of templates.
+   */
   getTemplates(userId: string): Promise<Template[]>;
+  /**
+   * Gets a template by its ID.
+   * @param {string} id - The ID of the template to get.
+   * @returns {Promise<Template | undefined>} A promise that resolves to the template, or undefined if not found.
+   */
   getTemplate(id: string): Promise<Template | undefined>;
+  /**
+   * Creates a new template.
+   * @param {InsertTemplate} template - The template to create.
+   * @returns {Promise<Template>} A promise that resolves to the created template.
+   */
   createTemplate(template: InsertTemplate): Promise<Template>;
+  /**
+   * Updates a template.
+   * @param {string} id - The ID of the template to update.
+   * @param {Partial<Template>} template - The template updates.
+   * @returns {Promise<Template | undefined>} A promise that resolves to the updated template, or undefined if not found.
+   */
   updateTemplate(id: string, template: Partial<Template>): Promise<Template | undefined>;
+  /**
+   * Deletes a template.
+   * @param {string} id - The ID of the template to delete.
+   * @returns {Promise<boolean>} A promise that resolves to true if the template was deleted, false otherwise.
+   */
   deleteTemplate(id: string): Promise<boolean>;
 
   // Inquiry operations
+  /**
+   * Gets all inquiries for a user.
+   * @param {string} userId - The ID of the user to get inquiries for.
+   * @returns {Promise<Inquiry[]>} A promise that resolves to a list of inquiries.
+   */
   getInquiries(userId: string): Promise<Inquiry[]>;
+  /**
+   * Gets an inquiry by its ID.
+   * @param {string} id - The ID of the inquiry to get.
+   * @returns {Promise<Inquiry | undefined>} A promise that resolves to the inquiry, or undefined if not found.
+   */
   getInquiry(id: string): Promise<Inquiry | undefined>;
+  /**
+   * Creates a new inquiry.
+   * @param {InsertInquiry} inquiry - The inquiry to create.
+   * @returns {Promise<Inquiry>} A promise that resolves to the created inquiry.
+   */
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
 
   // Response operations
+  /**
+   * Gets all responses for an inquiry.
+   * @param {string} inquiryId - The ID of the inquiry to get responses for.
+   * @returns {Promise<Response[]>} A promise that resolves to a list of responses.
+   */
   getResponses(inquiryId: string): Promise<Response[]>;
+  /**
+   * Gets all responses for a user.
+   * @param {string} userId - The ID of the user to get responses for.
+   * @returns {Promise<Response[]>} A promise that resolves to a list of responses.
+   */
   getResponsesByUser(userId: string): Promise<Response[]>;
+  /**
+   * Creates a new response.
+   * @param {InsertResponse} response - The response to create.
+   * @returns {Promise<Response>} A promise that resolves to the created response.
+   */
   createResponse(response: InsertResponse): Promise<Response>;
+  /**
+   * Updates a response.
+   * @param {string} id - The ID of the response to update.
+   * @param {Partial<Response>} response - The response updates.
+   * @returns {Promise<Response | undefined>} A promise that resolves to the updated response, or undefined if not found.
+   */
   updateResponse(id: string, response: Partial<Response>): Promise<Response | undefined>;
 
   // Integration operations
+  /**
+   * Gets all integrations for a user.
+   * @param {string} userId - The ID of the user to get integrations for.
+   * @returns {Promise<Integration[]>} A promise that resolves to a list of integrations.
+   */
   getIntegrations(userId: string): Promise<Integration[]>;
+  /**
+   * Gets an integration by its ID.
+   * @param {string} id - The ID of the integration to get.
+   * @returns {Promise<Integration | undefined>} A promise that resolves to the integration, or undefined if not found.
+   */
   getIntegration(id: string): Promise<Integration | undefined>;
+  /**
+   * Creates a new integration.
+   * @param {InsertIntegration} integration - The integration to create.
+   * @returns {Promise<Integration>} A promise that resolves to the created integration.
+   */
   createIntegration(integration: InsertIntegration): Promise<Integration>;
+  /**
+   * Updates an integration.
+   * @param {string} id - The ID of the integration to update.
+   * @param {Partial<Integration>} integration - The integration updates.
+   * @returns {Promise<Integration | undefined>} A promise that resolves to the updated integration, or undefined if not found.
+   */
   updateIntegration(id: string, integration: Partial<Integration>): Promise<Integration | undefined>;
 
   // Analytics operations
+  /**
+   * Gets analytics data for a user.
+   * @param {string} userId - The ID of the user to get analytics for.
+   * @param {number} [days] - The number of days to get analytics for.
+   * @returns {Promise<Analytics[]>} A promise that resolves to a list of analytics data.
+   */
   getAnalytics(userId: string, days?: number): Promise<Analytics[]>;
+  /**
+   * Creates new analytics data.
+   * @param {InsertAnalytics} analytics - The analytics data to create.
+   * @returns {Promise<Analytics>} A promise that resolves to the created analytics data.
+   */
   createAnalytics(analytics: InsertAnalytics): Promise<Analytics>;
+  /**
+   * Updates analytics data.
+   * @param {string} id - The ID of the analytics data to update.
+   * @param {Partial<Analytics>} analytics - The analytics data updates.
+   * @returns {Promise<Analytics | undefined>} A promise that resolves to the updated analytics data, or undefined if not found.
+   */
   updateAnalytics(id: string, analytics: Partial<Analytics>): Promise<Analytics | undefined>;
 }
 
+/**
+ * In-memory implementation of the IStorage interface.
+ */
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private templates: Map<string, Template>;
@@ -70,6 +197,10 @@ export class MemStorage implements IStorage {
     this.initializeDemoData();
   }
 
+  /**
+   * Initializes the storage with demo data.
+   * @private
+   */
   private async initializeDemoData() {
     // Create demo user
     const demoUser = await this.createUser({

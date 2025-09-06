@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file defines all the API routes for the application.
+ * It registers all the endpoints for templates, inquiries, responses, analytics,
+ * integrations, and AI services.
+ */
+
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
@@ -14,11 +20,22 @@ import {
   improveTemplate 
 } from "./services/openai";
 
+/**
+ * Registers all the API routes for the application.
+ * @param {Express} app - The Express application instance.
+ * @returns {Promise<Server>} A promise that resolves to an HTTP server instance.
+ */
 export async function registerRoutes(app: Express): Promise<Server> {
   // Demo user ID for MVP
   const DEMO_USER_ID = "jane.smith";
 
-  // Templates routes
+  // --- Templates routes ---
+
+  /**
+   * @route GET /api/templates
+   * @description Fetches all templates for the demo user.
+   * @returns {Response} A JSON response with the list of templates.
+   */
   app.get("/api/templates", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -33,6 +50,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route POST /api/templates
+   * @description Creates a new template for the demo user.
+   * @param {Request} req - The request object, containing the template data in the body.
+   * @returns {Response} A JSON response with the newly created template.
+   */
   app.post("/api/templates", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -52,6 +75,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route PUT /api/templates/:id
+   * @description Updates an existing template.
+   * @param {Request} req - The request object, containing the template ID in the params and the update data in the body.
+   * @returns {Response} A JSON response with the updated template.
+   */
   app.put("/api/templates/:id", async (req, res) => {
     try {
       const { id } = req.params;
@@ -67,6 +96,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route DELETE /api/templates/:id
+   * @description Deletes a template.
+   * @param {Request} req - The request object, containing the template ID in the params.
+   * @returns {Response} A 204 No Content response on success.
+   */
   app.delete("/api/templates/:id", async (req, res) => {
     try {
       const { id } = req.params;
@@ -82,7 +117,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Inquiries routes
+  // --- Inquiries routes ---
+
+  /**
+   * @route GET /api/inquiries
+   * @description Fetches all inquiries for the demo user.
+   * @returns {Response} A JSON response with the list of inquiries.
+   */
   app.get("/api/inquiries", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -97,6 +138,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route POST /api/inquiries
+   * @description Creates a new inquiry, classifies it using AI, and generates an automated response if applicable.
+   * @param {Request} req - The request object, containing the inquiry data in the body.
+   * @returns {Response} A JSON response with the newly created inquiry.
+   */
   app.post("/api/inquiries", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -154,7 +201,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Responses routes
+  // --- Responses routes ---
+
+  /**
+   * @route GET /api/responses
+   * @description Fetches all responses for the demo user.
+   * @returns {Response} A JSON response with the list of responses.
+   */
   app.get("/api/responses", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -169,6 +222,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route POST /api/responses
+   * @description Creates a new response.
+   * @param {Request} req - The request object, containing the response data in the body.
+   * @returns {Response} A JSON response with the newly created response.
+   */
   app.post("/api/responses", async (req, res) => {
     try {
       const validatedData = insertResponseSchema.parse(req.body);
@@ -179,6 +238,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route PUT /api/responses/:id/feedback
+   * @description Updates a response with customer feedback.
+   * @param {Request} req - The request object, containing the response ID in the params and feedback data in the body.
+   * @returns {Response} A JSON response with the updated response.
+   */
   app.put("/api/responses/:id/feedback", async (req, res) => {
     try {
       const { id } = req.params;
@@ -199,7 +264,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Analytics routes
+  // --- Analytics routes ---
+
+  /**
+   * @route GET /api/analytics
+   * @description Fetches analytics data for the demo user.
+   * @param {Request} req - The request object, optionally containing the number of days for the analytics period in the query.
+   * @returns {Response} A JSON response with the analytics data.
+   */
   app.get("/api/analytics", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -215,6 +287,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route GET /api/analytics/summary
+   * @description Fetches a summary of analytics data for the demo user.
+   * @returns {Response} A JSON response with the analytics summary.
+   */
   app.get("/api/analytics/summary", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -244,7 +321,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Integrations routes
+  // --- Integrations routes ---
+
+  /**
+   * @route GET /api/integrations
+   * @description Fetches all integrations for the demo user.
+   * @returns {Response} A JSON response with the list of integrations.
+   */
   app.get("/api/integrations", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -259,6 +342,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route POST /api/integrations
+   * @description Creates a new integration for the demo user.
+   * @param {Request} req - The request object, containing the integration data in the body.
+   * @returns {Response} A JSON response with the newly created integration.
+   */
   app.post("/api/integrations", async (req, res) => {
     try {
       const user = await storage.getUserByUsername(DEMO_USER_ID);
@@ -278,6 +367,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route PUT /api/integrations/:id
+   * @description Updates an existing integration.
+   * @param {Request} req - The request object, containing the integration ID in the params and the update data in the body.
+   * @returns {Response} A JSON response with the updated integration.
+   */
   app.put("/api/integrations/:id", async (req, res) => {
     try {
       const { id } = req.params;
@@ -293,7 +388,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // AI Learning routes
+  // --- AI Learning routes ---
+
+  /**
+   * @route POST /api/ai/classify
+   * @description Classifies an inquiry using AI.
+   * @param {Request} req - The request object, containing the inquiry subject and content in the body.
+   * @returns {Response} A JSON response with the classification result.
+   */
   app.post("/api/ai/classify", async (req, res) => {
     try {
       const { subject, content } = req.body;
@@ -311,7 +413,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/ai/generate-response", async (req, res) => {
+  /**
+   * @route POST /api/ai/generate-response
+   * @description Generates a response to an inquiry using a template and AI.
+   * @param {Request} req - The request object, containing the inquiry content, template ID, and variables in the body.
+   * @returns {Response} A JSON response with the generated response.
+   */
+  app.post("/api/ai/generate-response", async (req,.res) => {
     try {
       const { inquiryContent, templateId, variables } = req.body;
       const template = await storage.getTemplate(templateId);
@@ -327,6 +435,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  /**
+   * @route POST /api/ai/improve-template/:id
+   * @description Improves a template based on feedback from previous responses.
+   * @param {Request} req - The request object, containing the template ID in the params.
+   * @returns {Response} A JSON response with the suggested improvement.
+   */
   app.post("/api/ai/improve-template/:id", async (req, res) => {
     try {
       const { id } = req.params;
