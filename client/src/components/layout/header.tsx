@@ -1,15 +1,38 @@
+/**
+ * @fileoverview This file defines the Header component, which is displayed
+ * at the top of each page.
+ */
+
 import { Button } from "@/components/ui/button";
 import { Bell, Plus } from "lucide-react";
 
+/**
+ * The props for the Header component.
+ */
 interface HeaderProps {
+  /**
+   * The title of the page.
+   */
   title: string;
+  /**
+   * The description of the page.
+   */
   description: string;
+  /**
+   * An optional action to display in the header.
+   */
   action?: {
     label: string;
     onClick: () => void;
   };
 }
 
+/**
+ * The Header component is displayed at the top of each page. It shows the
+ * page title and description, and an optional action button.
+ * @param {HeaderProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered Header component.
+ */
 export default function Header({ title, description, action }: HeaderProps) {
   return (
     <header className="bg-card border-b border-border px-6 py-4" data-testid="header">

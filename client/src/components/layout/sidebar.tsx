@@ -1,3 +1,9 @@
+/**
+ * @fileoverview This file defines the Sidebar component, which is displayed
+ * on the left side of the application. It contains the navigation menu and
+ * the user profile section.
+ */
+
 import { Link, useLocation } from "wouter";
 import { Bot, BarChart3, FileText, Brain, Plug, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,6 +16,11 @@ const navigation = [
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
+/**
+ * The Sidebar component is displayed on the left side of the application. It
+ * contains the navigation menu and the user profile section.
+ * @returns {JSX.Element} The rendered Sidebar component.
+ */
 export default function Sidebar() {
   const [location] = useLocation();
 

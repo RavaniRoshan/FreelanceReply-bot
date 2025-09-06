@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the TemplateForm component, which is used
+ * to create and edit templates.
+ */
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -17,12 +22,31 @@ const formSchema = insertTemplateSchema.omit({ userId: true }).extend({
 
 type FormData = z.infer<typeof formSchema>;
 
+/**
+ * The props for the TemplateForm component.
+ */
 interface TemplateFormProps {
+  /**
+   * The template to edit, or null if creating a new template.
+   */
   template?: Template | null;
+  /**
+   * A callback to be called when the form is successfully submitted.
+   */
   onSuccess: () => void;
+  /**
+   * A callback to be called when the form is cancelled.
+   */
   onCancel: () => void;
 }
 
+/**
+ * The TemplateForm component is used to create and edit templates. It includes
+ * a form with fields for the template's name, category, subject, content,
+ * and variables.
+ * @param {TemplateFormProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered TemplateForm component.
+ */
 export default function TemplateForm({ template, onSuccess, onCancel }: TemplateFormProps) {
   const { toast } = useToast();
   const isEditing = !!template;

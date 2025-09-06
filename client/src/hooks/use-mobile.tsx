@@ -1,7 +1,18 @@
+/**
+ * @fileoverview This file contains a custom React hook that checks if the
+ * current screen width is less than a mobile breakpoint.
+ */
+
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
 
+/**
+ * A custom React hook that checks if the current screen width is less than
+ * a mobile breakpoint.
+ * @returns {boolean} True if the screen width is less than the mobile
+ * breakpoint, false otherwise.
+ */
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the Integrations page, which allows users
+ * to connect and manage their communication platforms.
+ */
+
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Header from "@/components/layout/header";
@@ -25,6 +30,10 @@ const platformColors = {
   Telegram: "bg-blue-500",
 };
 
+/**
+ * The Integrations page component.
+ * @returns {JSX.Element} The rendered Integrations page.
+ */
 export default function Integrations() {
   const [connectingPlatform, setConnectingPlatform] = useState<string | null>(null);
   const { toast } = useToast();

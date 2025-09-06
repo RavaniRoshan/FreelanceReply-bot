@@ -419,7 +419,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
    * @param {Request} req - The request object, containing the inquiry content, template ID, and variables in the body.
    * @returns {Response} A JSON response with the generated response.
    */
-  app.post("/api/ai/generate-response", async (req,.res) => {
+  app.post("/api/ai/generate-response", async (req, res) => {
     try {
       const { inquiryContent, templateId, variables } = req.body;
       const template = await storage.getTemplate(templateId);

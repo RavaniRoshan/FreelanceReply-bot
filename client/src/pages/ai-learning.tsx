@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the AI Learning page, which displays
+ * metrics and information about the performance of the AI model.
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/layout/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Brain, TrendingUp, Zap, Target } from "lucide-react";
 
+/**
+ * The AI Learning page component.
+ * @returns {JSX.Element} The rendered AI Learning page.
+ */
 export default function AILearning() {
   const { data: analytics } = useQuery({
     queryKey: ["/api/analytics", { days: 30 }],

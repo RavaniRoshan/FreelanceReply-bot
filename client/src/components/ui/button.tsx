@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the Button component, which is a wrapper
+ * around the HTML button element.
+ */
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -33,12 +38,25 @@ const buttonVariants = cva(
   }
 )
 
+/**
+ * The props for the Button component.
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /**
+   * Whether the button should be rendered as a child of another component.
+   */
   asChild?: boolean
 }
 
+/**
+ * The Button component is a wrapper around the HTML button element. It uses
+ * class-variance-authority to define different variants and sizes for the
+ * button.
+ * @param {ButtonProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered Button component.
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"

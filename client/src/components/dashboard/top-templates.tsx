@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the TopTemplates component, which displays a
+ * list of the top-performing templates.
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,6 +10,12 @@ import { Progress } from "@/components/ui/progress";
 import { Plus } from "lucide-react";
 import { Template } from "@shared/schema";
 
+/**
+ * The TopTemplates component displays a list of the top-performing templates.
+ * It shows the name, success rate, and usage of each template. It also has a
+ * loading state and a button to create a new template.
+ * @returns {JSX.Element} The rendered TopTemplates component.
+ */
 export default function TopTemplates() {
   const { data: templates, isLoading } = useQuery({
     queryKey: ["/api/templates"],

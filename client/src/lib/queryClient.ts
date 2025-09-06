@@ -1,5 +1,16 @@
+/**
+ * @fileoverview This file sets up the QueryClient for react-query.
+ * It includes a generic API request function, a function to create a query
+ * function, and the QueryClient instance itself.
+ */
+
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+/**
+ * Throws an error if the response is not ok.
+ * @param {Response} res - The response to check.
+ * @throws {Error} If the response is not ok.
+ */
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -7,6 +18,13 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+/**
+ * Makes a generic API request.
+ * @param {string} method - The HTTP method to use.
+ * @param {string} url - The URL to request.
+ * @param {unknown} [data] - The data to send with the request.
+ * @returns {Promise<Response>} A promise that resolves to the response.
+ */
 export async function apiRequest(
   method: string,
   url: string,
@@ -24,6 +42,13 @@ export async function apiRequest(
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
+
+/**
+ * Creates a query function for react-query.
+ * @param {object} options - The options for the query function.
+ * @param {UnauthorizedBehavior} options.on401 - The behavior to use when an unauthorized response is received.
+ * @returns {QueryFunction<T>} The query function.
+ */
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
@@ -41,6 +66,9 @@ export const getQueryFn: <T>(options: {
     return await res.json();
   };
 
+/**
+ * The QueryClient instance for the application.
+ */
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

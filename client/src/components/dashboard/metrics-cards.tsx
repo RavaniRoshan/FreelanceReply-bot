@@ -1,17 +1,38 @@
+/**
+ * @fileoverview This file defines the MetricsCards component, which displays
+ * a set of cards with key metrics.
+ */
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Reply, Clock, Star, FileText, TrendingUp } from "lucide-react";
 
+/**
+ * The props for the MetricsCards component.
+ */
 interface MetricsCardsProps {
+  /**
+   * The data to display in the metric cards.
+   */
   data?: {
     responseRate: number;
     timeSaved: number;
     customerSatisfaction: number;
     activeTemplates: number;
   };
+  /**
+   * Whether the data is loading.
+   */
   isLoading: boolean;
 }
 
+/**
+ * The MetricsCards component displays a set of cards with key metrics. It shows
+ * the response rate, time saved, customer satisfaction, and the number of
+ * active templates. It also has a loading state.
+ * @param {MetricsCardsProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered MetricsCards component.
+ */
 export default function MetricsCards({ data, isLoading }: MetricsCardsProps) {
   if (isLoading) {
     return (

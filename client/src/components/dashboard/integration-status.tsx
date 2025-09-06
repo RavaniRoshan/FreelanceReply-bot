@@ -1,9 +1,20 @@
+/**
+ * @fileoverview This file defines the IntegrationStatus component, which
+ * displays the status of the user's integrations.
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Integration } from "@shared/schema";
 
+/**
+ * The IntegrationStatus component displays the status of the user's
+ * integrations. It shows which platforms are connected and which are
+ * available to connect.
+ * @returns {JSX.Element} The rendered IntegrationStatus component.
+ */
 export default function IntegrationStatus() {
   const { data: integrations, isLoading } = useQuery({
     queryKey: ["/api/integrations"],

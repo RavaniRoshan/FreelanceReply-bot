@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the Templates page, which allows users to
+ * manage their automated response templates.
+ */
+
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Header from "@/components/layout/header";
@@ -11,6 +16,10 @@ import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import TemplateForm from "@/components/templates/template-form";
 
+/**
+ * The Templates page component.
+ * @returns {JSX.Element} The rendered Templates page.
+ */
 export default function Templates() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);

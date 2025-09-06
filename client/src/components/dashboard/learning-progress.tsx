@@ -1,7 +1,18 @@
+/**
+ * @fileoverview This file defines the LearningProgress component, which
+ * displays the progress of the AI's learning.
+ */
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Lightbulb } from "lucide-react";
 
+/**
+ * The LearningProgress component displays the progress of the AI's learning.
+ * It shows the progress for different categories, such as email
+ * classification, response accuracy, and context understanding.
+ * @returns {JSX.Element} The rendered LearningProgress component.
+ */
 export default function LearningProgress() {
   const progressData = [
     {

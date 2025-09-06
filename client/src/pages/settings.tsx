@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the Settings page, which allows users to
+ * manage their account and automation preferences.
+ */
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,6 +52,10 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 type AISettingsFormData = z.infer<typeof aiSettingsSchema>;
 type NotificationFormData = z.infer<typeof notificationSchema>;
 
+/**
+ * The Settings page component.
+ * @returns {JSX.Element} The rendered Settings page.
+ */
 export default function Settings() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("profile");

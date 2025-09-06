@@ -1,6 +1,15 @@
+/**
+ * @fileoverview This file defines the 404 Not Found page, which is
+ * displayed when a user navigates to a page that does not exist.
+ */
+
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
 
+/**
+ * The 404 Not Found page component.
+ * @returns {JSX.Element} The rendered 404 Not Found page.
+ */
 export default function NotFound() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">

@@ -1,7 +1,18 @@
+/**
+ * @fileoverview This file defines the ResponseChart component, which displays
+ * a chart of the response performance.
+ */
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart3 } from "lucide-react";
 
+/**
+ * The ResponseChart component displays a chart of the response performance.
+ * It includes a select input to filter the chart by time. The chart itself
+ * is a placeholder.
+ * @returns {JSX.Element} The rendered ResponseChart component.
+ */
 export default function ResponseChart() {
   return (
     <Card data-testid="response-chart">

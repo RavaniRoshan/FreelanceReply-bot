@@ -1,7 +1,18 @@
+/**
+ * @fileoverview This file defines the RecentActivity component, which displays
+ * a list of recent activities.
+ */
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Brain, Edit, Plug } from "lucide-react";
 
+/**
+ * The RecentActivity component displays a list of recent activities. It shows
+ * activities such as auto-replies, AI learning events, template updates, and
+ * integration activations.
+ * @returns {JSX.Element} The rendered RecentActivity component.
+ */
 export default function RecentActivity() {
   const activities = [
     {

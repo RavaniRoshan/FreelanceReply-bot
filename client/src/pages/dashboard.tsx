@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the Dashboard page, which displays a
+ * summary of the user's automation performance and insights.
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/layout/header";
 import MetricsCards from "@/components/dashboard/metrics-cards";
@@ -8,6 +13,10 @@ import TopTemplates from "@/components/dashboard/top-templates";
 import IntegrationStatus from "@/components/dashboard/integration-status";
 import { useToast } from "@/hooks/use-toast";
 
+/**
+ * The Dashboard page component.
+ * @returns {JSX.Element} The rendered Dashboard page.
+ */
 export default function Dashboard() {
   const { toast } = useToast();
 

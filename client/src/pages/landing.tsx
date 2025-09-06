@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the landing page for the application.
+ * It's a complex component with a lot of animations and different sections.
+ */
+
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,6 +29,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * The landing page component.
+ * @returns {JSX.Element} The rendered landing page.
+ */
 export default function LandingPage() {
   const heroRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
